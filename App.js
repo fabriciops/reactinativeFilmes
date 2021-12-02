@@ -1,21 +1,40 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {Button, SafeAreaView, StyleSheet, Text, View, FlatList, Image } from 'react-native';
 
-export default function App() {
+const App = () => {
+
+  const [movies, setMovies] = useState([]);
+
+  const handleLoadButton = async () => {
+    const req = await fetch("https://api.b7web.com.br/cinema/");
+    const json = await req.json();
+
+    if(json){
+      setMovies(json);
+    }
+
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaView>
+      <Button title="Carregar Filmes" onPress={handleLoadButton} />
+      <Text>Total de Filmes: {movies.length}</Text>
+      <FlatList 
+        data={movies}
+        renderItem = {({item}) => (
+          <View>
+            <Image source={{uri: item.avatar}} style={{width: 200, height:200}}/>
+            <Text>
+            {item.titulo}
+            </Text>
+          </View>
+        )}
+        keyExtractor={item => item.titulo}
+
+      />
+    </SafeAreaView>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
