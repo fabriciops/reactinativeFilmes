@@ -46,27 +46,28 @@ const App = () => {
 
 
     {!loading && 
-      <Text style={styles.totalMovieText}>Total de Filmes: {movies.length} </Text>>
-      <FlatList
-        style={styles.list} 
-        data={movies}
-        renderItem = {({item}) => (
-          <View style={styles.movieItem}>
-            
-            <Image 
-              source={{uri: item.avatar}}
-              style={styles.movieImage}
-              resizeMode="contain"
-              />
-            <Text style={styles.movieTitle}>
-            {item.titulo}
-            </Text>
-          </View>
-        )}
-        keyExtractor={item => item.titulo}
+      <>
+        <Text style={styles.totalMovieText}>Total de Filmes: {movies.length} </Text>
+        <FlatList
+          style={styles.list} 
+          data={movies}
+          renderItem = {({item}) => (
+            <View style={styles.movieItem}>
+              
+              <Image 
+                source={{uri: item.avatar}}
+                style={styles.movieImage}
+                resizeMode="contain"
+                />
+              <Text style={styles.movieTitle}>
+              {item.titulo}
+              </Text>
+            </View>
+          )}
+          keyExtractor={item => item.titulo}
 
-      />
-      
+        />
+      </>
     }
 
       
